@@ -38,8 +38,6 @@ const ProductLinkingModal: React.FC<ProductLinkingModalProps> = ({
     }
   }, [isOpen, product, inventoryItems]);
 
-  if (!isOpen || !product) return null;
-
   const filteredInventory = useMemo(() => {
     return inventoryItems.filter(item =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -50,23 +48,9 @@ const ProductLinkingModal: React.FC<ProductLinkingModalProps> = ({
     );
   }, [inventoryItems, searchTerm]);
 
-  const selectedItem = inventoryItems.find(item => item.id === selectedInventoryId);
-
-  const handleLink = async () => {
-    if (!selectedInventoryId) return;
-
-    setIsSubmitting(true);
-    try {
-      await onLink(product.id, selectedInventoryId);
-      onClose();
-    } catch (error) {
-      console.error('Error linking product:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const getSimilarityScore = (item: CompanyInventoryItem): number => {
+    if (!product) return 0;
+    
     let score = 0;
     const productName = product.name.toLowerCase();
     const itemName = item.name.toLowerCase();
@@ -101,6 +85,24 @@ const ProductLinkingModal: React.FC<ProductLinkingModalProps> = ({
       return scoreB - scoreA;
     });
   }, [filteredInventory, product]);
+
+  if (!isOpen || !product) return null;
+
+  const selectedItem = inventoryItems.find(item => item.id === selectedInventoryId);
+
+  const handleLink = async () => {
+    if (!selectedInventoryId) return;
+
+    setIsSubmitting(true);
+    try {
+      await onLink(product.id, selectedInventoryId);
+      onClose();
+    } catch (error) {
+      console.error('Error linking product:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center p-4 z-50">
