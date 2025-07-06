@@ -74,4 +74,119 @@ export interface ManualProduct {
   linkedAt?: string;
 }
 
-export type OrderType = 'quote' | 'inventory';
+export type OrderType = 'quote' | 'inventory' | 'manual';
+
+// New enhanced types for the hybrid system
+export interface ProductVariant {
+  id: string;
+  productId: string;
+  name: string;
+  sku?: string;
+  description?: string;
+  specifications?: Record<string, any>;
+  basePrice: number;
+  quantity: number;
+  totalPrice: number;
+}
+
+export interface SupplierInfo {
+  id: string;
+  name: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  address?: Address;
+  paymentTerms?: string;
+  leadTime?: number;
+  notes?: string;
+}
+
+export interface VariantSupplierRelation {
+  id: string;
+  variantId: string;
+  supplierId: string;
+  quotedPrice: number;
+  quantity: number;
+  leadTime?: number;
+  minimumOrder?: number;
+  notes?: string;
+  isSelected: boolean;
+}
+
+export interface DeliveryInfo {
+  id: string;
+  estimatedDate?: string;
+  actualDate?: string;
+  trackingNumber?: string;
+  deliveryCompany?: string;
+  deliveryAddress: Address;
+  specialInstructions?: string;
+  status: 'pending' | 'in_transit' | 'delivered' | 'delayed';
+}
+
+export interface ReceivedItem {
+  id: string;
+  variantId: string;
+  quantityReceived: number;
+  quantityExpected: number;
+  receivedDate: string;
+  receivedBy: string;
+  condition: 'good' | 'damaged' | 'defective';
+  notes?: string;
+}
+
+export interface WarehouseAllocation {
+  id: string;
+  variantId: string;
+  quantityForClient: number;
+  quantityForWarehouse: number;
+  warehouseLocation?: string;
+  allocationNotes?: string;
+}
+
+export interface EnhancedPurchaseOrder {
+  // Basic Information
+  id: string;
+  orderNumber: string;
+  type: OrderType;
+  status: 'draft' | 'pending_approval' | 'approved' | 'ordered' | 'partially_received' | 'completed' | 'cancelled';
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  
+  // Source Information
+  sourceType: 'quote' | 'inventory' | 'manual';
+  sourceId?: string;
+  quoteId?: string;
+  projectId?: string;
+  companyId: string;
+  
+  // Products and Variants
+  variants: ProductVariant[];
+  
+  // Suppliers
+  suppliers: SupplierInfo[];
+  variantSupplierRelations: VariantSupplierRelation[];
+  
+  // Delivery
+  deliveryInfo: DeliveryInfo;
+  
+  // Warehouse and Fulfillment
+  receivedItems: ReceivedItem[];
+  warehouseAllocations: WarehouseAllocation[];
+  
+  // Financial
+  subtotal: number;
+  freight: number;
+  taxes: number;
+  totalAmount: number;
+  
+  // Additional Information
+  notes?: string;
+  internalNotes?: string;
+  approvals: {
+    internalApprovedBy?: string;
+    internalApprovedAt?: string;
+    externalApprovedBy?: string;
+    externalApprovedAt?: string;
+  };
+}

@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import ClientView from './views/ClientView';
 import AdminView from './views/AdminView';
 import ManualProductsAdminView from './views/ManualProductsAdminView';
+import EnhancedOrderView from './views/EnhancedOrderView';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<ClientView />} />
           <Route path="/admin" element={<AdminView />} />
           <Route path="/manual-products" element={<ManualProductsAdminView />} />
+          <Route path="/enhanced-order" element={<EnhancedOrderView />} />
         </Routes>
       </Layout>
     </Router>
