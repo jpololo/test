@@ -89,6 +89,7 @@ export interface ProductVariant {
   quantity: number;
   totalPrice: number;
   isCustom?: boolean; // New field to indicate custom products
+  source?: 'supplier' | 'warehouse'; // New field to indicate product source
 }
 
 export interface SupplierInfo {
@@ -114,6 +115,13 @@ export interface VariantSupplierRelation {
   isSelected: boolean;
 }
 
+export interface ProductDelivery {
+  id: string;
+  variantId: string;
+  quantity: number;
+  deliveryNotes?: string;
+}
+
 export interface DeliveryInfo {
   id: string;
   estimatedDate?: string;
@@ -125,13 +133,6 @@ export interface DeliveryInfo {
   specialInstructions?: string;
   status: 'pending' | 'in_transit' | 'delivered' | 'delayed';
   productDeliveries?: ProductDelivery[]; // New field for products in this delivery
-}
-
-export interface ProductDelivery {
-  id: string;
-  variantId: string;
-  quantity: number;
-  deliveryNotes?: string;
 }
 
 export interface ReceivedItem {
