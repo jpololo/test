@@ -85,8 +85,10 @@ export interface ProductVariant {
   description?: string;
   specifications?: Record<string, any>;
   basePrice: number;
+  salePrice?: number; // New field for sale price
   quantity: number;
   totalPrice: number;
+  isCustom?: boolean; // New field to indicate custom products
 }
 
 export interface SupplierInfo {
@@ -119,8 +121,17 @@ export interface DeliveryInfo {
   trackingNumber?: string;
   deliveryCompany?: string;
   deliveryAddress: Address;
+  deliveryLocation: string; // New field for delivery location name
   specialInstructions?: string;
   status: 'pending' | 'in_transit' | 'delivered' | 'delayed';
+  productDeliveries?: ProductDelivery[]; // New field for products in this delivery
+}
+
+export interface ProductDelivery {
+  id: string;
+  variantId: string;
+  quantity: number;
+  deliveryNotes?: string;
 }
 
 export interface ReceivedItem {
@@ -167,8 +178,8 @@ export interface EnhancedPurchaseOrder {
   suppliers: SupplierInfo[];
   variantSupplierRelations: VariantSupplierRelation[];
   
-  // Delivery
-  deliveryInfo: DeliveryInfo;
+  // Multiple Deliveries (many-to-many with products)
+  deliveries?: DeliveryInfo[];
   
   // Warehouse and Fulfillment
   receivedItems: ReceivedItem[];

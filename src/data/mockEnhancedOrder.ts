@@ -33,8 +33,10 @@ export const mockEnhancedOrder: EnhancedPurchaseOrder = {
         'Graphics': 'Intel Iris Xe'
       },
       basePrice: 1299.99,
+      salePrice: 1599.99,
       quantity: 5,
-      totalPrice: 6499.95
+      totalPrice: 6499.95,
+      isCustom: false
     },
     {
       id: 'var-002',
@@ -49,25 +51,27 @@ export const mockEnhancedOrder: EnhancedPurchaseOrder = {
         'Buttons': '7 customizable'
       },
       basePrice: 99.99,
+      salePrice: 129.99,
       quantity: 5,
-      totalPrice: 499.95
+      totalPrice: 499.95,
+      isCustom: false
     },
     {
       id: 'var-003',
-      productId: 'prod-003',
-      name: 'Samsung 27" 4K Monitor',
-      sku: 'SAMS-27-4K',
-      description: 'Professional 4K monitor with USB-C connectivity',
+      productId: 'custom-001',
+      name: 'Custom Project Signage',
+      sku: 'CUSTOM-SIGN-001',
+      description: 'Custom branded signage for project site',
       specifications: {
-        'Size': '27 inches',
-        'Resolution': '3840 x 2160',
-        'Panel': 'IPS',
-        'Refresh Rate': '60Hz',
-        'Connectivity': 'USB-C, HDMI, DisplayPort'
+        'Material': 'Aluminum composite',
+        'Size': '4x8 feet',
+        'Finish': 'Weather resistant coating'
       },
       basePrice: 449.99,
+      salePrice: 699.99,
       quantity: 3,
-      totalPrice: 1349.97
+      totalPrice: 1349.97,
+      isCustom: true
     }
   ],
   
@@ -107,19 +111,19 @@ export const mockEnhancedOrder: EnhancedPurchaseOrder = {
     },
     {
       id: 'sup-003',
-      name: 'Samsung Electronics',
-      contactEmail: 'business@samsung.com',
-      contactPhone: '+1-800-SAMSUNG',
+      name: 'Local Sign Company',
+      contactEmail: 'orders@localsigns.com',
+      contactPhone: '+1-555-SIGNS-1',
       address: {
-        street: '85 Challenger Rd',
-        city: 'Ridgefield Park',
-        state: 'NJ',
-        zipCode: '07660',
+        street: '123 Industrial Blvd',
+        city: 'New York',
+        state: 'NY',
+        zipCode: '10001',
         country: 'USA'
       },
-      paymentTerms: 'Net 30',
-      leadTime: 10,
-      notes: 'Bulk pricing available for monitors'
+      paymentTerms: 'Net 15',
+      leadTime: 14,
+      notes: 'Custom fabrication specialist'
     }
   ],
   
@@ -153,66 +157,131 @@ export const mockEnhancedOrder: EnhancedPurchaseOrder = {
       supplierId: 'sup-003',
       quotedPrice: 449.99,
       quantity: 3,
-      leadTime: 10,
+      leadTime: 14,
       minimumOrder: 1,
-      notes: 'Professional series',
+      notes: 'Custom fabrication',
       isSelected: true
     }
   ],
   
-  // Delivery Information
-  deliveryInfo: {
-    id: 'del-001',
-    estimatedDate: '2024-01-25',
-    actualDate: '2024-01-24',
-    trackingNumber: 'TRK-001234567890',
-    deliveryCompany: 'FedEx',
-    deliveryAddress: {
-      street: '123 Business Plaza',
-      city: 'New York',
-      state: 'NY',
-      zipCode: '10001',
-      country: 'USA'
+  // Multiple Deliveries
+  deliveries: [
+    {
+      id: 'del-001',
+      estimatedDate: '2024-01-25',
+      actualDate: '2024-01-24',
+      trackingNumber: 'TRK-001234567890',
+      deliveryCompany: 'FedEx',
+      deliveryLocation: 'Project Site 1',
+      deliveryAddress: {
+        street: '123 Business Plaza',
+        city: 'New York',
+        state: 'NY',
+        zipCode: '10001',
+        country: 'USA'
+      },
+      specialInstructions: 'Deliver to loading dock. Contact security at extension 1234.',
+      status: 'delivered',
+      productDeliveries: [
+        {
+          id: 'pd-001',
+          variantId: 'var-001',
+          quantity: 3,
+          deliveryNotes: 'For immediate deployment'
+        },
+        {
+          id: 'pd-002',
+          variantId: 'var-002',
+          quantity: 3,
+          deliveryNotes: 'Accessories for laptops'
+        }
+      ]
     },
-    specialInstructions: 'Deliver to loading dock. Contact security at extension 1234.',
-    status: 'delivered'
-  },
+    {
+      id: 'del-002',
+      estimatedDate: '2024-01-28',
+      trackingNumber: 'TRK-002345678901',
+      deliveryCompany: 'UPS',
+      deliveryLocation: 'Project Site 2',
+      deliveryAddress: {
+        street: '456 Corporate Ave',
+        city: 'Brooklyn',
+        state: 'NY',
+        zipCode: '11201',
+        country: 'USA'
+      },
+      specialInstructions: 'Deliver to main entrance during business hours.',
+      status: 'in_transit',
+      productDeliveries: [
+        {
+          id: 'pd-003',
+          variantId: 'var-003',
+          quantity: 2,
+          deliveryNotes: 'Install immediately upon delivery'
+        }
+      ]
+    },
+    {
+      id: 'del-003',
+      estimatedDate: '2024-01-30',
+      deliveryLocation: 'Our Warehouse',
+      deliveryAddress: {
+        street: '789 Warehouse District',
+        city: 'Queens',
+        state: 'NY',
+        zipCode: '11101',
+        country: 'USA'
+      },
+      specialInstructions: 'Standard warehouse receiving procedures.',
+      status: 'pending',
+      productDeliveries: [
+        {
+          id: 'pd-004',
+          variantId: 'var-001',
+          quantity: 2,
+          deliveryNotes: 'Backup inventory'
+        },
+        {
+          id: 'pd-005',
+          variantId: 'var-002',
+          quantity: 2,
+          deliveryNotes: 'Warehouse stock'
+        },
+        {
+          id: 'pd-006',
+          variantId: 'var-003',
+          quantity: 1,
+          deliveryNotes: 'Spare signage'
+        }
+      ]
+    }
+  ],
   
-  // Received Items
+  // Received Items (only for warehouse deliveries)
   receivedItems: [
     {
       id: 'rec-001',
       variantId: 'var-001',
-      quantityReceived: 5,
-      quantityExpected: 5,
-      receivedDate: '2024-01-24T09:30:00Z',
+      quantityReceived: 2,
+      quantityExpected: 2,
+      receivedDate: '2024-01-30T09:30:00Z',
       receivedBy: 'Mike Johnson',
       condition: 'good',
-      notes: 'All laptops in perfect condition, serial numbers recorded'
+      notes: 'Laptops received in perfect condition, added to warehouse inventory'
     },
     {
       id: 'rec-002',
       variantId: 'var-002',
-      quantityReceived: 5,
-      quantityExpected: 5,
-      receivedDate: '2024-01-24T09:35:00Z',
-      receivedBy: 'Mike Johnson',
-      condition: 'good',
-      notes: 'Mice tested and working properly'
-    },
-    {
-      id: 'rec-003',
-      variantId: 'var-003',
       quantityReceived: 2,
-      quantityExpected: 3,
-      receivedDate: '2024-01-24T09:40:00Z',
+      quantityExpected: 2,
+      receivedDate: '2024-01-30T09:35:00Z',
       receivedBy: 'Mike Johnson',
       condition: 'good',
-      notes: 'One monitor missing from shipment, supplier contacted'
+      notes: 'Mice tested and working properly, stored in accessories section'
     }
   ],
   
-  // Warehouse Allocations
+  // Warehouse Allocations (only for items that come to warehouse)
   warehouseAllocations: [
     {
       id: 'wa-001',
@@ -234,9 +303,9 @@ export const mockEnhancedOrder: EnhancedPurchaseOrder = {
       id: 'wa-003',
       variantId: 'var-003',
       quantityForClient: 2,
-      quantityForWarehouse: 0,
+      quantityForWarehouse: 1,
       warehouseLocation: 'C-08-A',
-      allocationNotes: 'All monitors for client, waiting for missing unit'
+      allocationNotes: 'Most signage goes directly to sites, 1 spare for warehouse'
     }
   ],
   
@@ -247,8 +316,8 @@ export const mockEnhancedOrder: EnhancedPurchaseOrder = {
   totalAmount: 9143.40,
   
   // Additional Information
-  notes: 'Urgent order for Q1 project deployment. All items needed by end of January.',
-  internalNotes: 'Client has requested expedited delivery. Monitor supplier needs follow-up for missing unit.',
+  notes: 'Multi-site deployment order with custom signage. Coordinate deliveries with project managers.',
+  internalNotes: 'Client has requested expedited delivery for Project Site 1. Custom signage requires 2-week lead time.',
   
   // Approvals
   approvals: {
