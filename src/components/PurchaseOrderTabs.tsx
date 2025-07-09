@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { EnhancedPurchaseOrder, OrderType, ProductVariant, DeliveryInfo, ProductDelivery } from '../types';
 import DeliveryChainManager from './DeliveryChainManager';
 import ProductReceptionManager from './ProductReceptionManager';
+import WarehouseOutboundManager from './WarehouseOutboundManager';
+import { mockWarehouseStock, mockWarehouseOutbounds } from '../data/mockWarehouseData';
 import { 
   FileText, 
   Package, 
@@ -41,7 +43,8 @@ const tabs = [
   { id: 'products', name: 'Products & Variants', icon: Package },
   { id: 'suppliers', name: 'Suppliers & Sourcing', icon: Users },
   { id: 'delivery', name: 'Delivery Chains', icon: Truck },
-  { id: 'reception', name: 'Recepción de Productos', icon: Warehouse }
+  { id: 'reception', name: 'Recepción de Productos', icon: Warehouse },
+  { id: 'outbound', name: 'Salidas de Almacén', icon: Package }
 ];
 
 // Mock system products for search
@@ -369,6 +372,29 @@ const PurchaseOrderTabs: React.FC<PurchaseOrderTabsProps> = ({
       />
     </div>
   );
+
+  const renderOutboundTab = () => (
+    <div className="space-y-6">
+      <WarehouseOutboundManager
+        outbounds={mockWarehouseOutbounds}
+        warehouseStock={mockWarehouseStock}
+        onAddOutbound={(newOutbound) => {
+          // In a real app, this would update the warehouse outbounds
+          console.log('Adding new outbound:', newOutbound);
+        }}
+        onUpdateOutbound={(outboundId, updates) => {
+          // In a real app, this would update the specific outbound
+          console.log('Updating outbound:', outboundId, updates);
+        }}
+        onDeleteOutbound={(outboundId) => {
+          // In a real app, this would delete the outbound
+          console.log('Deleting outbound:', outboundId);
+        }}
+        isEditable={isEditable}
+      />
+    </div>
+  );
+  
   const renderTabContent = () => {
     switch (activeTab) {
       case 'general':
@@ -381,6 +407,8 @@ const PurchaseOrderTabs: React.FC<PurchaseOrderTabsProps> = ({
         return renderDeliveryTab();
       case 'reception':
         return renderReceptionTab();
+      case 'outbound':
+        return renderOutboundTab();
       default:
         return renderGeneralTab();
     }

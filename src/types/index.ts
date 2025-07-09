@@ -184,6 +184,62 @@ export interface ProductReception {
   createdAt: string;
 }
 
+export interface WarehouseOutbound {
+  id: string;
+  outboundNumber: string;
+  outboundDate: string;
+  clientId: string;
+  clientName: string;
+  clientAddress: Address;
+  responsibleUser: string;
+  status: 'pending' | 'in_preparation' | 'ready_to_ship' | 'shipped' | 'delivered';
+  outboundItems: WarehouseOutboundItem[];
+  deliveryInfo?: {
+    trackingNumber?: string;
+    carrier?: string;
+    estimatedDeliveryDate?: string;
+    actualDeliveryDate?: string;
+    specialInstructions?: string;
+  };
+  notes?: string;
+  createdAt: string;
+  updatedAt?: string;
+  totalValue: number;
+}
+
+export interface WarehouseOutboundItem {
+  id: string;
+  productId: string;
+  productName: string;
+  sku?: string;
+  quantityRequested: number;
+  quantityAllocated: number;
+  quantityShipped: number;
+  unitPrice: number;
+  totalPrice: number;
+  warehouseLocation?: string;
+  sourceType: 'supplier_delivery' | 'existing_stock';
+  sourceId?: string; // ID of the original delivery or stock entry
+  sourceReference?: string; // Reference to original PO, delivery, etc.
+  notes?: string;
+}
+
+export interface WarehouseStock {
+  id: string;
+  productId: string;
+  productName: string;
+  sku?: string;
+  availableQuantity: number;
+  reservedQuantity: number;
+  totalQuantity: number;
+  unitPrice: number;
+  warehouseLocation?: string;
+  sourceType: 'supplier_delivery' | 'existing_stock' | 'manual_entry';
+  sourceId?: string;
+  sourceReference?: string;
+  lastUpdated: string;
+}
+
 export interface WarehouseAllocation {
   id: string;
   variantId: string;
