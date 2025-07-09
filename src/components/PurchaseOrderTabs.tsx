@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { EnhancedPurchaseOrder, OrderType, ProductVariant, DeliveryInfo, ProductDelivery } from '../types';
+import DeliveryChainManager from './DeliveryChainManager';
 import { 
   FileText, 
   Package, 
@@ -33,7 +34,7 @@ interface PurchaseOrderTabsProps {
   onOrderUpdate: (updates: Partial<EnhancedPurchaseOrder>) => void;
   isEditable?: boolean;
 }
-
+    { id: 'delivery', name: 'Delivery Chains', icon: Truck },
 // Mock system products for search
 const mockSystemProducts = [
   { id: 'sys-001', name: 'Dell XPS 13 Laptop', price: 1299.99, sku: 'DELL-XPS13', supplier: 'Dell Technologies' },
@@ -92,6 +93,38 @@ const PurchaseOrderTabs: React.FC<PurchaseOrderTabsProps> = ({
       icon: DollarSign 
     }
   ];
+
+  const handleDeliveryChainAdd = (chain: any) => {
+    const newChain = {
+      ...chain,
+      id: `chain-${Date.now()}`
+    };
+    
+    onOrderUpdate({
+      deliveryChains: [...(order.deliveryChains || []), newChain]
+    });
+  };
+
+  const handleDeliveryChainUpdate = (chainId: string, updates: any) => {
+    onOrderUpdate({
+      deliveryChains: order.deliveryChains?.map(chain =>
+        chain.id === chainId ? { ...chain, ...updates } : chain
+      ) || []
+    });
+  };
+
+  const handleDeliveryChainDelete = (chainId: string) => {
+    onOrderUpdate({
+      deliveryChains: order.deliveryChains?.filter(chain => chain.id !== chainId) || []
+    });
+  };
+
+  // Get available products for delivery chains
+  const availableProducts = order.variants.map(variant => ({
+    id: variant.id,
+    name: variant.name,
+    totalQuantity: variant.quantity
+  }));
 
   const getStatusColor = (status: string) => {
     const colors = {
@@ -1088,46 +1121,14 @@ const DeliveryTab: React.FC<{
                   }))}
                   placeholder="City"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                />
-              </div>
-              <div>
-                <input
-                  type="text"
-                  value={deliveryForm.deliveryAddress.state}
-                  onChange={(e) => setDeliveryForm(prev => ({ 
-                    ...prev, 
-                    deliveryAddress: { ...prev.deliveryAddress, state: e.target.value }
-                  }))}
-                  placeholder="State"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                />
-              </div>
-              <div>
-                <input
-                  type="text"
-                  value={deliveryForm.deliveryAddress.zipCode}
-                  onChange={(e) => setDeliveryForm(prev => ({ 
-                    ...prev, 
-                    deliveryAddress: { ...prev.deliveryAddress, zipCode: e.target.value }
-                  }))}
-                  placeholder="ZIP Code"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                />
-              </div>
-              <div>
-                <input
-                  type="text"
-                  value={deliveryForm.deliveryAddress.country}
-                  onChange={(e) => setDeliveryForm(prev => ({ 
-                    ...prev, 
-                    deliveryAddress: { ...prev.deliveryAddress, country: e.target.value }
-                  }))}
-                  placeholder="Country"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                />
-              </div>
-            </div>
-          </div>
+          <DeliveryChainManager
+            deliveryChains={order.deliveryChains || []}
+            onAddChain={handleDeliveryChainAdd}
+            onUpdateChain={handleDeliveryChainUpdate}
+            onDeleteChain={handleDeliveryChainDelete}
+            availableProducts={availableProducts}
+            isEditable={isEditable}
+          />
 
           {/* Products for this delivery */}
           <div className="mb-4">

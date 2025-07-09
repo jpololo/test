@@ -135,6 +135,30 @@ export interface DeliveryInfo {
   productDeliveries?: ProductDelivery[]; // New field for products in this delivery
 }
 
+export interface DeliveryStop {
+  id: string;
+  type: 'warehouse' | 'project_site' | 'client_location' | 'supplier';
+  name: string;
+  address: Address;
+  estimatedDate?: string;
+  actualDate?: string;
+  trackingNumber?: string;
+  deliveryCompany?: string;
+  status: 'pending' | 'in_transit' | 'delivered' | 'delayed';
+  specialInstructions?: string;
+  isIntermediate: boolean; // true if it's not the final destination
+}
+
+export interface DeliveryChain {
+  id: string;
+  productId: string;
+  productName: string;
+  quantity: number;
+  stops: DeliveryStop[];
+  currentStopIndex: number;
+  overallStatus: 'pending' | 'in_progress' | 'completed' | 'delayed';
+}
+
 export interface ReceivedItem {
   id: string;
   variantId: string;
@@ -181,6 +205,9 @@ export interface EnhancedPurchaseOrder {
   
   // Multiple Deliveries (many-to-many with products)
   deliveries?: DeliveryInfo[];
+  
+  // New Delivery Chain System
+  deliveryChains?: DeliveryChain[];
   
   // Warehouse and Fulfillment
   receivedItems: ReceivedItem[];

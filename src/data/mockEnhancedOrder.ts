@@ -257,6 +257,178 @@ export const mockEnhancedOrder: EnhancedPurchaseOrder = {
     }
   ],
   
+  // Delivery Chains (New Multi-Stop System)
+  deliveryChains: [
+    {
+      id: 'chain-001',
+      productId: 'var-001',
+      productName: 'Dell XPS 13 Laptop - 16GB RAM',
+      quantity: 3,
+      currentStopIndex: 1, // Currently at warehouse
+      overallStatus: 'in_progress',
+      stops: [
+        {
+          id: 'stop-001-1',
+          type: 'supplier',
+          name: 'Dell Technologies',
+          address: {
+            street: '1 Dell Way',
+            city: 'Round Rock',
+            state: 'TX',
+            zipCode: '78682',
+            country: 'USA'
+          },
+          estimatedDate: '2024-01-22',
+          actualDate: '2024-01-22',
+          trackingNumber: 'DELL001234567',
+          deliveryCompany: 'FedEx',
+          status: 'delivered',
+          specialInstructions: 'Pick up from Dell warehouse',
+          isIntermediate: true
+        },
+        {
+          id: 'stop-001-2',
+          type: 'warehouse',
+          name: 'Our Warehouse',
+          address: {
+            street: '789 Warehouse District',
+            city: 'Queens',
+            state: 'NY',
+            zipCode: '11101',
+            country: 'USA'
+          },
+          estimatedDate: '2024-01-24',
+          actualDate: '2024-01-24',
+          trackingNumber: 'WHSE001234567',
+          deliveryCompany: 'FedEx',
+          status: 'delivered',
+          specialInstructions: 'Quality check and repackaging required',
+          isIntermediate: true
+        },
+        {
+          id: 'stop-001-3',
+          type: 'project_site',
+          name: 'Project Site 1',
+          address: {
+            street: '123 Business Plaza',
+            city: 'New York',
+            state: 'NY',
+            zipCode: '10001',
+            country: 'USA'
+          },
+          estimatedDate: '2024-01-26',
+          trackingNumber: 'PROJ001234567',
+          deliveryCompany: 'UPS',
+          status: 'in_transit',
+          specialInstructions: 'Deliver to IT department, contact John Smith ext. 1234',
+          isIntermediate: false
+        }
+      ]
+    },
+    {
+      id: 'chain-002',
+      productId: 'var-002',
+      productName: 'Logitech MX Master 3 Mouse',
+      quantity: 5,
+      currentStopIndex: 0,
+      overallStatus: 'pending',
+      stops: [
+        {
+          id: 'stop-002-1',
+          type: 'supplier',
+          name: 'Logitech International',
+          address: {
+            street: '7700 Gateway Blvd',
+            city: 'Newark',
+            state: 'CA',
+            zipCode: '94560',
+            country: 'USA'
+          },
+          estimatedDate: '2024-01-25',
+          trackingNumber: 'LOGI002345678',
+          deliveryCompany: 'DHL',
+          status: 'pending',
+          specialInstructions: 'Express shipping requested',
+          isIntermediate: true
+        },
+        {
+          id: 'stop-002-2',
+          type: 'project_site',
+          name: 'Project Site 2',
+          address: {
+            street: '456 Corporate Ave',
+            city: 'Brooklyn',
+            state: 'NY',
+            zipCode: '11201',
+            country: 'USA'
+          },
+          estimatedDate: '2024-01-27',
+          status: 'pending',
+          specialInstructions: 'Direct delivery to project site, no warehouse stop needed',
+          isIntermediate: false
+        }
+      ]
+    },
+    {
+      id: 'chain-003',
+      productId: 'var-003',
+      productName: 'Custom Project Signage',
+      quantity: 2,
+      currentStopIndex: 0,
+      overallStatus: 'delayed',
+      stops: [
+        {
+          id: 'stop-003-1',
+          type: 'supplier',
+          name: 'Local Sign Company',
+          address: {
+            street: '123 Industrial Blvd',
+            city: 'New York',
+            state: 'NY',
+            zipCode: '10001',
+            country: 'USA'
+          },
+          estimatedDate: '2024-01-28',
+          status: 'delayed',
+          specialInstructions: 'Custom fabrication - allow extra time',
+          isIntermediate: true
+        },
+        {
+          id: 'stop-003-2',
+          type: 'warehouse',
+          name: 'Our Warehouse',
+          address: {
+            street: '789 Warehouse District',
+            city: 'Queens',
+            state: 'NY',
+            zipCode: '11101',
+            country: 'USA'
+          },
+          estimatedDate: '2024-01-30',
+          status: 'pending',
+          specialInstructions: 'Inspect signage quality before final delivery',
+          isIntermediate: true
+        },
+        {
+          id: 'stop-003-3',
+          type: 'project_site',
+          name: 'Project Site 1',
+          address: {
+            street: '123 Business Plaza',
+            city: 'New York',
+            state: 'NY',
+            zipCode: '10001',
+            country: 'USA'
+          },
+          estimatedDate: '2024-02-01',
+          status: 'pending',
+          specialInstructions: 'Installation team will be on-site for immediate setup',
+          isIntermediate: false
+        }
+      ]
+    }
+  ],
+  
   // Received Items (only for warehouse deliveries)
   receivedItems: [
     {
