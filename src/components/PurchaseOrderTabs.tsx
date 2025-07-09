@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { EnhancedPurchaseOrder, OrderType, ProductVariant, DeliveryInfo, ProductDelivery } from '../types';
 import DeliveryChainManager from './DeliveryChainManager';
+import ProductReceptionManager from './ProductReceptionManager';
 import { 
   FileText, 
   Package, 
@@ -39,7 +40,8 @@ const tabs = [
   { id: 'general', name: 'General Information', icon: Info },
   { id: 'products', name: 'Products & Variants', icon: Package },
   { id: 'suppliers', name: 'Suppliers & Sourcing', icon: Users },
-  { id: 'delivery', name: 'Delivery Chains', icon: Truck }
+  { id: 'delivery', name: 'Delivery Chains', icon: Truck },
+  { id: 'reception', name: 'Recepción de Productos', icon: Warehouse }
 ];
 
 // Mock system products for search
@@ -338,6 +340,35 @@ const PurchaseOrderTabs: React.FC<PurchaseOrderTabsProps> = ({
     </div>
   );
 
+  const renderReceptionTab = () => (
+    <div className="space-y-6">
+      <ProductReceptionManager
+        receptions={order.productReceptions || []}
+        deliveries={order.deliveries || []}
+        onAddReception={(newReception) => {
+          const updatedReceptions = [...(order.productReceptions || []), {
+            ...newReception,
+            id: `reception-${Date.now()}`,
+            createdAt: new Date().toISOString()
+          }];
+          onOrderUpdate({ productReceptions: updatedReceptions });
+        }}
+        onUpdateReception={(receptionId, updates) => {
+          const updatedReceptions = order.productReceptions?.map(reception =>
+            reception.id === receptionId ? { ...reception, ...updates } : reception
+          ) || [];
+          onOrderUpdate({ productReceptions: updatedReceptions });
+        }}
+        onDeleteReception={(receptionId) => {
+          const updatedReceptions = order.productReceptions?.filter(reception => 
+            reception.id !== receptionId
+          ) || [];
+          onOrderUpdate({ productReceptions: updatedReceptions });
+        }}
+        isEditable={isEditable}
+      />
+    </div>
+  );
   const renderTabContent = () => {
     switch (activeTab) {
       case 'general':
@@ -348,6 +379,8 @@ const PurchaseOrderTabs: React.FC<PurchaseOrderTabsProps> = ({
         return renderSuppliersTab();
       case 'delivery':
         return renderDeliveryTab();
+      case 'reception':
+        return renderReceptionTab();
       default:
         return renderGeneralTab();
     }

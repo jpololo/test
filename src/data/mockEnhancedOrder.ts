@@ -429,6 +429,70 @@ export const mockEnhancedOrder: EnhancedPurchaseOrder = {
     }
   ],
   
+  // Product Receptions
+  productReceptions: [
+    {
+      id: 'reception-001',
+      deliveryId: 'del-001',
+      deliveryName: 'Delivery #1 - Project Site 1',
+      receptionDate: '2024-01-24T14:30:00Z',
+      receivedBy: 'Mike Johnson',
+      status: 'complete',
+      createdAt: '2024-01-24T14:30:00Z',
+      notes: 'All items received in perfect condition',
+      receivedItems: [
+        {
+          id: 'rec-item-001',
+          deliveryId: 'del-001',
+          productId: 'var-001',
+          productName: 'Dell XPS 13 Laptop - 16GB RAM',
+          quantityReceived: 3,
+          quantityExpected: 3,
+          receivedDate: '2024-01-24T14:30:00Z',
+          receivedBy: 'Mike Johnson',
+          condition: 'good',
+          notes: 'Laptops tested and working properly'
+        },
+        {
+          id: 'rec-item-002',
+          deliveryId: 'del-001',
+          productId: 'var-002',
+          productName: 'Logitech MX Master 3 Mouse',
+          quantityReceived: 3,
+          quantityExpected: 3,
+          receivedDate: '2024-01-24T14:30:00Z',
+          receivedBy: 'Mike Johnson',
+          condition: 'good',
+          notes: 'All mice working correctly'
+        }
+      ]
+    },
+    {
+      id: 'reception-002',
+      deliveryId: 'del-002',
+      deliveryName: 'Delivery #2 - Project Site 2',
+      receptionDate: '2024-01-28T10:15:00Z',
+      receivedBy: 'Sarah Wilson',
+      status: 'partial',
+      createdAt: '2024-01-28T10:15:00Z',
+      notes: 'Partial delivery - remaining items expected tomorrow',
+      receivedItems: [
+        {
+          id: 'rec-item-003',
+          deliveryId: 'del-002',
+          productId: 'var-003',
+          productName: 'Custom Project Signage',
+          quantityReceived: 1,
+          quantityExpected: 2,
+          receivedDate: '2024-01-28T10:15:00Z',
+          receivedBy: 'Sarah Wilson',
+          condition: 'good',
+          notes: 'First signage received, second one delayed'
+        }
+      ]
+    }
+  ],
+  
   // Received Items (only for warehouse deliveries)
   receivedItems: [
     {

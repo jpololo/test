@@ -161,13 +161,27 @@ export interface DeliveryChain {
 
 export interface ReceivedItem {
   id: string;
-  variantId: string;
+  deliveryId: string;
+  productId: string;
+  productName: string;
   quantityReceived: number;
   quantityExpected: number;
   receivedDate: string;
   receivedBy: string;
   condition: 'good' | 'damaged' | 'defective';
   notes?: string;
+}
+
+export interface ProductReception {
+  id: string;
+  deliveryId: string;
+  deliveryName: string;
+  receptionDate: string;
+  receivedBy: string;
+  receivedItems: ReceivedItem[];
+  notes?: string;
+  status: 'partial' | 'complete';
+  createdAt: string;
 }
 
 export interface WarehouseAllocation {
@@ -212,6 +226,7 @@ export interface EnhancedPurchaseOrder {
   // Warehouse and Fulfillment
   receivedItems: ReceivedItem[];
   warehouseAllocations: WarehouseAllocation[];
+  productReceptions?: ProductReception[];
   
   // Financial
   subtotal: number;
