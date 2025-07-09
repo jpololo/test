@@ -317,8 +317,22 @@ const PurchaseOrderTabs: React.FC<PurchaseOrderTabsProps> = ({
   const renderDeliveryTab = () => (
     <div className="space-y-6">
       <DeliveryChainManager
-        order={order}
-        onOrderUpdate={onOrderUpdate}
+        deliveryChains={order.deliveryChains || []}
+        availableProducts={order.productVariants || []}
+        onAddChain={(newChain) => {
+          const updatedChains = [...(order.deliveryChains || []), newChain];
+          onOrderUpdate({ deliveryChains: updatedChains });
+        }}
+        onUpdateChain={(chainId, updates) => {
+          const updatedChains = order.deliveryChains?.map(chain =>
+            chain.id === chainId ? { ...chain, ...updates } : chain
+          ) || [];
+          onOrderUpdate({ deliveryChains: updatedChains });
+        }}
+        onDeleteChain={(chainId) => {
+          const updatedChains = order.deliveryChains?.filter(chain => chain.id !== chainId) || [];
+          onOrderUpdate({ deliveryChains: updatedChains });
+        }}
         isEditable={isEditable}
       />
     </div>
