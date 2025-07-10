@@ -300,3 +300,66 @@ export interface EnhancedPurchaseOrder {
     externalApprovedAt?: string;
   };
 }
+
+// Company Details Types
+export interface Company {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  website?: string;
+  address: Address;
+  status: 'active' | 'pending_approval' | 'suspended' | 'inactive';
+  createdAt: string;
+  updatedAt: string;
+  representatives: CompanyRepresentative[];
+  documents: CompanyDocument[];
+  tradeReferences: TradeReference[];
+  warehouses: CompanyWarehouse[];
+}
+
+export interface CompanyRepresentative {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  gender: 'male' | 'female' | 'other' | 'prefer_not_to_say';
+  position?: string;
+  isPrimary: boolean;
+  isActive: boolean;
+}
+
+export interface CompanyDocument {
+  id: string;
+  name: string;
+  type: 'certificate' | 'license' | 'tax_exemption' | 'insurance' | 'other';
+  fileUrl: string;
+  uploadedAt: string;
+  uploadedBy: string;
+  expirationDate?: string;
+  status: 'active' | 'expired' | 'pending_review';
+}
+
+export interface TradeReference {
+  id: string;
+  supplierCompanyName: string;
+  creditContactEmail: string;
+  creditContactPhone: string;
+  accountNumber: string;
+  relationshipYears?: number;
+  creditLimit?: number;
+  status: 'active' | 'inactive';
+}
+
+export interface CompanyWarehouse {
+  id: string;
+  name: string;
+  address: Address;
+  contactPerson: string;
+  contactPhone: string;
+  contactEmail: string;
+  capacity?: number;
+  specialFeatures?: string[];
+  isActive: boolean;
+  assignedAt: string;
+}
