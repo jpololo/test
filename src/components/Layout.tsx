@@ -16,6 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { name: 'Manual Products', href: '/manual-products', icon: Package },
     { name: 'Enhanced Order View', href: '/enhanced-order', icon: Eye },
     { name: 'Company Details', href: '/company', icon: Building },
+    { name: 'Warehouse Purchase Order', href: '/warehouse-purchase-order', icon: FileText },
   ];
 
   const isActive = (path: string) => location.pathname === path;

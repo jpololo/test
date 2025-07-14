@@ -74,6 +74,88 @@ export interface ManualProduct {
   linkedAt?: string;
 }
 
+// Purchase Order from Warehouse to Multiple Suppliers
+export interface WarehousePurchaseOrder {
+  id: string;
+  orderNumber: string;
+  status: 'draft' | 'pending' | 'approved' | 'completed' | 'cancelled';
+  subOrderNumber?: string;
+  createdAt: string;
+  updatedAt: string;
+  
+  // Supplier Information
+  supplier: {
+    id: string;
+    name: string;
+    address: string;
+    contactInfo?: string;
+  };
+  
+  // Order Details
+  orderFrom: {
+    company: string;
+    address: string;
+    poBox?: string;
+  };
+  
+  // Products
+  products: WarehousePurchaseProduct[];
+  
+  // Financial Summary
+  costSummary: {
+    subtotal: number;
+    taxes: number;
+    shipping: number;
+    total: number;
+  };
+  
+  // Additional Info
+  shippingPrice?: number;
+  representative?: string;
+  description?: string;
+  totalItems: number;
+  
+  // Incoming tracking
+  incomingDeliveries?: IncomingDelivery[];
+  
+  // Documents
+  orderSlips?: OrderSlip[];
+}
+
+export interface WarehousePurchaseProduct {
+  id: string;
+  name: string;
+  description?: string;
+  costPrice: number;
+  quantity: number;
+  taxes: number;
+  total: number;
+  productImage?: string;
+  category?: string;
+  isExpanded?: boolean;
+}
+
+export interface IncomingDelivery {
+  id: string;
+  productId: string;
+  productName: string;
+  expectedQuantity: number;
+  receivedQuantity: number;
+  expectedDate: string;
+  deliveryDate?: string;
+  receivedBy?: string;
+  status: 'pending' | 'partial' | 'completed';
+}
+
+export interface OrderSlip {
+  id: string;
+  fileName: string;
+  fileUrl: string;
+  uploadedAt: string;
+  fileSize: string;
+  fileType: string;
+}
+
 export type OrderType = 'quote' | 'inventory' | 'manual';
 
 // New enhanced types for the hybrid system
