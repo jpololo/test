@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingCart, Settings, FileText, Package, Eye, Building } from 'lucide-react';
+import { Menu, X, ShoppingCart, Settings, FileText, Package, Eye, Building, AlertTriangle } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,6 +17,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { name: 'Enhanced Order View', href: '/enhanced-order', icon: Eye },
     { name: 'Company Details', href: '/company', icon: Building },
     { name: 'Warehouse Purchase Order', href: '/warehouse-purchase-order', icon: FileText },
+    { name: 'Error Page', href: '/error', icon: AlertTriangle },
   ];
 
   const isActive = (path: string) => location.pathname === path;
