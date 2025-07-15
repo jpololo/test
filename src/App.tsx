@@ -8,6 +8,7 @@ import EnhancedOrderView from './views/EnhancedOrderView';
 import CompanyView from './views/CompanyView';
 import WarehousePurchaseOrderViewPage from './views/WarehousePurchaseOrderView';
 import ErrorPageView from './views/ErrorPageView';
+import NotificationSettingsView from './views/NotificationSettingsView';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/company" element={<CompanyView />} />
           <Route path="/warehouse-purchase-order" element={<WarehousePurchaseOrderViewPage />} />
           <Route path="/error" element={<ErrorPageView />} />
+          <Route path="/notifications" element={<NotificationSettingsView />} />
         </Routes>
       </Layout>
     </Router>

@@ -445,3 +445,46 @@ export interface CompanyWarehouse {
   isActive: boolean;
   assignedAt: string;
 }
+
+// Notification Settings Types
+export interface NotificationCategory {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  isCollapsible: boolean;
+  isExpanded?: boolean;
+  notifications: NotificationSetting[];
+}
+
+export interface NotificationSetting {
+  id: string;
+  name: string;
+  description: string;
+  categoryId: string;
+  channels: {
+    email: boolean;
+    push: boolean;
+    sms: boolean;
+    inApp: boolean;
+  };
+  isEnabled: boolean;
+  priority: 'low' | 'medium' | 'high' | 'critical';
+}
+
+export interface NotificationPreferences {
+  userId: string;
+  globalSettings: {
+    emailEnabled: boolean;
+    pushEnabled: boolean;
+    smsEnabled: boolean;
+    inAppEnabled: boolean;
+    quietHours: {
+      enabled: boolean;
+      startTime: string;
+      endTime: string;
+    };
+    frequency: 'immediate' | 'hourly' | 'daily' | 'weekly';
+  };
+  categories: NotificationCategory[];
+}
